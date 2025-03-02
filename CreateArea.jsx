@@ -1,0 +1,42 @@
+import React from "react";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
+function CreateArea(props) {
+  const [note,setNote]=React.useState({
+    title:"",
+    content:""
+  })
+
+  function HandleChange(event){
+    const {name,value}=event.target;
+    setNote(prevNote=>{
+      return{
+        ...prevNote,
+        [name]:value
+
+      };
+    });
+  }
+  function submitNote(event){
+    props.onAdd(note);
+    setNote({
+      title:"",
+      content:""
+    });
+    event.preventDefault();
+  }
+    
+  return (
+    <div>
+      <form>
+        <input name="title" onChange={HandleChange} value={note.title} placeholder="Title" />
+        <textarea name="content" onChange={HandleChange} value={note.content} placeholder="Take a note..." rows="3" />
+        <button onClick={submitNote}> 
+          <AddCircleOutlineIcon/>
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default CreateArea;
